@@ -10,6 +10,8 @@ namespace SalesWebMvc.Controllers
 {
     public class HomeController : Controller
     {
+        // a rota chama o controlador
+        // o controlador que retorna a sua view (return View)
         public IActionResult Index()
         {
             return View();
@@ -17,7 +19,8 @@ namespace SalesWebMvc.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Salles Web MVC App from C# Course";
+            ViewData["Professor"] = "Nelio Alves";
 
             return View();
         }
