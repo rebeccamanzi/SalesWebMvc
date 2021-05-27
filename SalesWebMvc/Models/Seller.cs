@@ -41,7 +41,7 @@ namespace SalesWebMvc.Models
 
         public double TotalSales(DateTime inicial, DateTime final)
         {
-            //using LINQ 
+            //using LINQ
             //total sales filtered by date
             return Sales.Where(sr => sr.Date >= inicial && sr.Date <= final).Sum(sr => sr.Amount);
         }
