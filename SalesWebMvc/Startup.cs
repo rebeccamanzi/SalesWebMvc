@@ -40,9 +40,10 @@ namespace SalesWebMvc
                     options.UseMySql(Configuration.GetConnectionString("SalesWebMvcContext"), builder =>
                         builder.MigrationsAssembly("SalesWebMvc")));
 
-            // Os Serviços podem ser injetados em outras classes
+            // Os Serviços poderão ser injetados em outras classes
             services.AddScoped<SeedingService>();
             services.AddScoped<SellerService>();
+            services.AddScoped<DepartmentService>();
            }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
