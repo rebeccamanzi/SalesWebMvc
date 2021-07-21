@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Localization;
 using SalesWebMvc.Data;
 using SalesWebMvc.Services;
 
@@ -51,6 +53,17 @@ namespace SalesWebMvc
         {
             if (env.IsDevelopment())
             {
+                //localização padrão -> EUA
+                var enUS = new CultureInfo("en-US");
+                var localizationOptions = new RequestLocalizationOptions
+                {
+                    DefaultRequestCulture = new RequestCulture(enUS),
+                    SupportedCultures = new List<CultureInfo> { enUS },
+                    SupportedUICultures = new List<CultureInfo> { enUS }
+                };
+
+                app.UseRequestLocalization(localizationOptions);
+
                 app.UseDeveloperExceptionPage();
                 seedingService.Seed(); //if database is empty it'll populate 
             }
