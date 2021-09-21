@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SalesWebMvc.Models;
 using SalesWebMvc.Models.ViewModels;
 using SalesWebMvc.Services;
-using SalesWebMvc.Services.Exceptions;
 
 namespace SalesWebMvc.Controllers
 {
@@ -41,6 +38,14 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken] // notacao p previnir ataques CSRF (dados maliciosos na autenticação)
         public IActionResult Create(Seller seller)
         {
+            // enquanto n estiver validado
+            if (!ModelState.IsValid)
+            {
+                var departments = _departmentService.FindAll();
+                var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
+                // irá retornar o obj novamente sem salvar
+                return View(viewModel);
+            }
             _sellerService.Insert(seller);
             // retorna para a listagem de vendedores após ciar um novo
             return RedirectToAction(nameof(Index));
@@ -108,6 +113,15 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Seller seller)
         {
+            // enquanto n estiver validado
+            if (!ModelState.IsValid)
+            {
+                var departments = _departmentService.FindAll();
+                var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
+                // irá retornar o obj novamente sem salvar
+                return View(viewModel);
+            }
+
             if (id != seller.Id)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id mismatch" });
